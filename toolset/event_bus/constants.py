@@ -1,0 +1,3 @@
+GARBAGE_QUEUE_SUFFIX = "garbage"
+POST_RETRY_EXCHANGE_SUFFIX = "retry.post"
+PRE_RETRY_EXCHANGE_SUFFIX = "retry.pre"

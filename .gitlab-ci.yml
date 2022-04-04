@@ -1,0 +1,51 @@
+stages:
+  - tests
+  - publish
+
+
+default:
+  image: python:3.7-slim
+
+variables:
+  POETRY_VIRTUALENVS_CREATE: 'false'
+
+test:pytest:
+  stage: tests
+  script:
+    - pip install poetry
+    - poetry install -E django
+    - poetry install -E aiohttp
+    - bin/ci.sh
+  coverage: '/[\d\.]+\%\s*$/'
+  except:
+    - master
+
+test:version_and_changelog_changed:
+  stage: tests
+  image: alpine:3.12
+  script: |
+    apk add git
+    git fetch origin master
+    if git diff origin/master ${CI_COMMIT_SHA} -- pyproject.toml | grep '+version'; then
+      echo "Version bumped"
+    else
+      echo "Looks like you forgot to bump version"
+      exit 1
+    fi
+    if git diff origin/master ${CI_COMMIT_SHA} -- CHANGELOG.md; then
+      echo "Changelog updated"
+    else
+      echo "Looks like you forgot to update changelog"
+      exit 1
+    fi
+  except:
+    - master
+
+publish:
+  stage: publish
+  script:
+    - pip install poetry
+    - poetry config repositories.gitlab https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi
+    - poetry publish --build -r gitlab -u ${CI_DEPLOY_USER} -p ${CI_DEPLOY_PASSWORD}
+  only:
+    - master

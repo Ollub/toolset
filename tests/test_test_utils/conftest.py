@@ -1,0 +1,67 @@
+import pytest
+
+
+@pytest.fixture()
+def master_payload():
+    """Payload for master."""
+    return {
+        "id": 1,
+        "profile": {
+            "passport_data": {
+                "id": 1,
+                "serial_number": "1111",
+                "number": "123123",
+                "issue_by": "МО УФМС РОССИИ",
+                "issue_date": "2010-01-01",
+                "kind": "RUSSIAN",
+                "birth_place": "Москва",
+                "subdivision_code": "123",
+            },
+            "registration_address": {
+                "id": 5,
+                "postal_code": "",
+                "country": "",
+                "region": "",
+                "area": "",
+                "city": "Москва",
+                "city_district": "",
+                "settlement": "",
+                "street": None,
+                "house": None,
+                "block": "",
+                "flat": None,
+            },
+            "residence_address": {
+                "id": 6,
+                "postal_code": "",
+                "country": "",
+                "region": "",
+                "area": "",
+                "city": "Москва",
+                "city_district": "",
+                "settlement": "",
+                "street": None,
+                "house": None,
+                "block": "",
+                "flat": None,
+            },
+            "inn": "1234567",
+            "ie_settlement_account": "1234567",
+            "legal_type": "SELF_EMPLOYED",
+            "bank_id": 1,
+            "section_id": 1,
+            "birth_date": "1960-01-01",
+            "connected_via_agent": None,
+        },
+        "groups": ["master"],
+        "relatives": [],
+        "first_name": "Иван",
+        "middle_name": "Иванович",
+        "last_name": "Иванов",
+        "email": "",
+        "created_at": "2020-01-29T17:26:14.604105Z",
+        "phone": "+79998881234",
+        "additional_phones": [],
+        "ses_code": 1234,
+        "ses_date": None,
+    }

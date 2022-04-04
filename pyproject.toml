@@ -1,0 +1,128 @@
+[tool.poetry]
+name = "toolset"
+version = "1.0.0"
+description = ""
+authors = ["Ollub <orlovoficial@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+django = {version = "^3.2.0", extras = ["django"], optional = true}
+djangorestframework = {version = "^3.12.4", extras = ["django"], optional = true}
+psycopg2-binary = {version = "^2.8.5", extras = ["django"], optional = true}
+typing_extensions = "^3.7.4"
+aiohttp = {version = "^3.6.2", extras = ["aiohttp"], optional = true}
+pika = {version = "^1.1.0", extras = ["django"], optional = true}
+structlog = "^21.2.0"
+aio-pika = {version = "^6.7.1", extras = ["aiohttp"], optional = true}
+drf_yasg = {version = "^1.20.0", extras = ["django"], optional = true}
+
+[tool.poetry.dev-dependencies]
+# testing
+pytest = "6.0.1"
+pytest-cov = "^2.8.1"
+pytest-mock = "^3.3.1"
+#linting
+wemake-python-styleguide = "^0.14.1"
+flakehell = "^0.3.3"
+flake8 = "3.8.2"
+flake8-blind-except = "^0.1.1"
+flake8-pytest-style = "^0.5.0"
+bandit = "^1.6.2"
+safety = "^1.8.5"
+xenon = "^0.7.0"
+mypy = "0.782"
+# formatting
+isort = "^4.3.21"
+add-trailing-comma = "^2.0.1"
+black = "^19.10b0"
+pytest-randomly = "^3.4.0"
+pytest-aiohttp = "^0.3.0"
+pytest-django = "^3.9.0"
+asynctest = "0.13.0"
+# versions fixed due to security vulnerabilities:
+py = "^1.9.0"
+PyYAML = "^5.4.0"
+pylint = "^2.7.0"
+jinja2 = "2.11.3"
+coverage = "6.0b1"
+
+[tool.poetry.extras]
+django = ["django", "djangorestframework", "psycopg2-binary", "pika", "drf_yasg"]
+aiohttp = ["aiohttp", "aio-pika"]
+
+[tool.black]
+line-length = 100
+target_version = ['py37']
+include = '\.pyi?$'
+exclude = '''
+
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+    | venv
+    | env
+    | migrations
+  )/
+)
+'''
+
+[tool.isort]
+line_length = "100"
+# See https://github.com/timothycrosley/isort#multi-line-output-modes
+multi_line_output = "3"
+include_trailing_comma = "true"
+sections = "FUTURE,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
+default_section = "FIRSTPARTY"
+skip = '''
+
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+    | venv
+    | env
+    | migrations
+  )/
+)
+'''
+known_first_party = "hrm"
+
+[tool.flakehell]
+# make output nice
+format = "grouped"
+# 80 chars aren't enough in 21 century
+max_line_length = 100
+# show line of source code in output
+show_source = true
+
+# list of plugins and rules for them
+[tool.flakehell.plugins]
+# enable everything that starts from `flake8-`
+"flake8-*" = ["+*", "-I*"]
+flake8-darglint = ["-*"]
+mccabe = ["+*"]
+pep8-naming = ["+*"]
+pycodestyle = ["+*"]
+radon = ["+*"]
+wemake-python-styleguide = ["+*"]
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
